@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import Http404
 
-posts = {
-    0: {
+posts = [
+    {
         'id': 0,
         'location': 'Остров отчаянья',
         'date': '30 сентября 1659 года',
@@ -14,7 +14,7 @@ posts = {
                 полумёртвым на берег этого проклятого острова,
                 который назвал островом Отчаяния.''',
     },
-    1: {
+    {
         'id': 1,
         'location': 'Остров отчаянья',
         'date': '1 октября 1659 года',
@@ -30,7 +30,7 @@ posts = {
                 построить баркас, на котором и выбрались бы из этого
                 гиблого места.''',
     },
-    2: {
+    {
         'id': 2,
         'location': 'Остров отчаянья',
         'date': '25 октября 1659 года',
@@ -42,18 +42,24 @@ posts = {
                 Весь этот день я хлопотал  около вещей: укрывал и
                 укутывал их, чтобы не испортились от дождя.''',
     },
+]
+
+new_posts = {
+    0: posts[0],
+    1: posts[1],
+    2: posts[2],
 }
 
 
 def index(request):
     template = 'blog/index.html'
-    context = {'posts': list(reversed(posts.values()))}
+    context = {'posts': list(reversed(new_posts.values()))}
     return render(request, template, context)
 
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    post = posts.get(post_id)
+    post = new_posts.get(post_id)
 
     if post is None:
         raise Http404(f"Пост с ID {post_id} не найден")
